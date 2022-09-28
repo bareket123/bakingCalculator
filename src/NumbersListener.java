@@ -3,8 +3,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class NumbersListener implements ActionListener {
- private JButton button;
- private JTextField textField;
+ private final JButton button;
+ private final JTextField textField;
     public NumbersListener(JButton button,JTextField text){
         this.button=button;
         this.textField=text;
