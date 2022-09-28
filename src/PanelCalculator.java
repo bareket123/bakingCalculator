@@ -7,16 +7,13 @@ import javax.swing.text.Document;
 public class PanelCalculator  extends JPanel {
    private   JTextField input;
    private JComboBox comboBoxMaterials;
-   private Materials current;
 
    public PanelCalculator() {
         this.setLayout(new BorderLayout());
         this.setBackground(Color.MAGENTA);
-
        input =new JTextField();
-       input.setPreferredSize(new Dimension(900,60));
+       input.setPreferredSize(new Dimension(Model.INPUT_WIDTH,Model.INPUT_HEIGHT));
        comboBoxMaterials=new JComboBox(Materials.values());
-       comboBoxMaterials.addActionListener(new ComboListener());
 
         JPanel inputPanel= new JPanel();
         inputPanel.add(input);
@@ -25,19 +22,19 @@ public class PanelCalculator  extends JPanel {
         numbers.setLayout(new GridLayout(4,3));
 
 
-        JButton b1 = new JButton("1");
-        JButton b2 = new JButton("2");
-        JButton b3 = new JButton("3");
-        JButton b4 = new JButton("4");
-        JButton b5 = new JButton("5");
-        JButton b6 = new JButton("6");
-        JButton b7 = new JButton("7");
-        JButton b8 = new JButton("8");
-        JButton b9 = new JButton("9");
-        JButton point = new JButton(".");
-        JButton zeroNumber = new JButton("0");
+        JButton b1 = new JButton(Model.B1);
+        JButton b2 = new JButton(Model.B2);
+        JButton b3 = new JButton(Model.B3);
+        JButton b4 = new JButton(Model.B4);
+        JButton b5 = new JButton(Model.B5);
+        JButton b6 = new JButton(Model.B6);
+        JButton b7 = new JButton(Model.B7);
+        JButton b8 = new JButton(Model.B8);
+        JButton b9 = new JButton(Model.B8);
+        JButton point = new JButton(Model.POINT);
+        JButton b0 = new JButton(Model.B0);
 
-        JButton [] numbersArray= {b1,b2,b3,b4,b5,b6,b7,b8,b9,point,zeroNumber};
+        JButton [] numbersArray= {b1,b2,b3,b4,b5,b6,b7,b8,b9,point,b0};
 
 
      for (JButton button:numbersArray) {
@@ -45,42 +42,26 @@ public class PanelCalculator  extends JPanel {
 
      }
 
+       JButton doubleButton=new JButton(Model.DOUBLE_BUTTON);
 
-        JButton doubleButton=new JButton("X");
+     doubleButton.addActionListener(e -> {
+         input.setText(String.valueOf(Double.parseDouble(input.getText())*2));
+     });
 
-        JButton gram = new JButton("Gram");
-        gram.addActionListener(e->{
+        JButton gram = new JButton(String.valueOf(Materials.gram));
+        gram.addActionListener(new Controller(gram,input,comboBoxMaterials));
+        JButton cup = new JButton(String.valueOf(Materials.cup));
+        cup.addActionListener(new Controller(cup,input,comboBoxMaterials));
+        JButton mil = new JButton(String.valueOf(Materials.mil));
+        mil.addActionListener(new Controller(mil,input,comboBoxMaterials));
+        JButton spoon = new JButton(String.valueOf(Materials.spoon));
+        spoon.addActionListener(new Controller(spoon,input,comboBoxMaterials));
+        JButton bag = new JButton(String.valueOf(Materials.bag));
+        bag.addActionListener(new Controller(bag,input,comboBoxMaterials));
 
-            double currentInput=Integer.parseInt(input.getText());
-            switch (current){
-                case gram:
-                    input.setText("it is the same amount!");
-                    break;
-                case cup:
-                    input.setText(String.valueOf(currentInput*140));
-                    break;
-                case mil:
-                    input.setText(String.valueOf(currentInput/1000));
-                    break;
-                case spoon: case bag:
-                    input.setText(String.valueOf(currentInput*10));
-                    break;
-
-
-
-            }
-
-
-        });
-        JButton cup = new JButton("Cup");
-        JButton mil = new JButton("Mil");
-        JButton spoon = new JButton("Spoon");
-        JButton bag = new JButton("Bag");
-
-        JButton [] materialsArray={gram,cup,mil,spoon,bag};
 
         JPanel resultPanel=new JPanel();
-        JButton clear=new JButton("Clear");
+        JButton clear=new JButton(Model.CLEAR_BUTTON);
         clear.addActionListener(e->{
          this.input.setText(null);
         });
@@ -88,7 +69,7 @@ public class PanelCalculator  extends JPanel {
         add(resultPanel, BorderLayout.SOUTH);
 
      JPanel materials =new JPanel();
-     materials.setPreferredSize(new Dimension(300,600));
+     materials.setPreferredSize(new Dimension(Model.MATERIALS_PANEL_WIDTH,Model.MATERIALS_PANEL_HEIGHT));
      materials.setLayout(new GridLayout(5,1));
      materials.add(gram);
      materials.add(cup);
@@ -109,24 +90,15 @@ public class PanelCalculator  extends JPanel {
      numbers.add(b2);
      numbers.add(b3);
      numbers.add(doubleButton);
-     numbers.add(zeroNumber);
+     numbers.add(b0);
      numbers.add(point);
 
      add(numbers,BorderLayout.CENTER);
 
-
-
-
-        this.setPreferredSize(new Dimension(1000, 700));
-
+     this.setPreferredSize(new Dimension(Model.CALCULATOR_PANEL_WIDTH, Model.CALCULATOR_PANEL_HEIGHT));
 
     }
-    private class ComboListener implements ActionListener{
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            current=Materials.values()[comboBoxMaterials.getSelectedIndex()];
-        }
-    }
+
 
 }

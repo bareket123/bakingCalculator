@@ -12,7 +12,7 @@ public class Main extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
         PanelCalculator panelCalculator = new PanelCalculator();
-       this.getContentPane().add(panelCalculator);
-      this.pack();
+        this.getContentPane().add(panelCalculator);
+        this.pack();
     }
 }
